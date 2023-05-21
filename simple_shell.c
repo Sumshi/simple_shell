@@ -4,7 +4,7 @@
  *
  * Return: Always 0.
  */
-int main(void)
+int main()
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
@@ -13,7 +13,6 @@ int main(void)
 	char *cmd;
 	char *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
-
 	while (1)
 	{
 		if (clear_requested)
@@ -108,11 +107,12 @@ int main(void)
 	}
 	return (0);
 }
+
 /**
  * printPrompt - prints a prompt to the console
  * Return: always 0
  */
-void printPrompt(void)
+void printPrompt()
 {
 	if (isatty(STDIN_FILENO) == 1)/*reads from terminal*/
 	{
