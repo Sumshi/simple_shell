@@ -8,7 +8,6 @@ int main()
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
-	int status;
 	int clear_requested = 0;
 	char *cmd;
 	char *msg;
@@ -54,29 +53,13 @@ int main()
 		}
 		else if (_strcmpr(args[0], "setenv") == 0)
 		{/*Handle setenv command*/
-			if (args[1] == NULL || args[2] == NULL)
-			{
-				msg = "Usage: setenv VARIABLE VALUE\n";
-				write(STDOUT_FILENO, msg, _strlen(msg));
-				continue;
-			}
-			if (mySetEnv(args[1], args[2]) != 0)
-			{
-				continue;
-			}
+			set_env(args);
+			continue;
 		}
 		else if (_strcmpr(args[0], "unsetenv") == 0)
 		{/*Handle unsetenv command*/
-			if (args[1] == NULL)
-			{
-				msg = "Usage: unsetenv VARIABLE\n";
-				write(STDOUT_FILENO, msg, _strlen(msg));
-				continue;
-			}
-			if (myUnsetEnv(args[1]) != 0)
-			{
-				continue;
-			}
+			unset_env(args);
+			continue;
 		}
 		else if (_strcmpr(args[0], "clear") == 0)
 		{

@@ -37,6 +37,8 @@ void printEnv();
 int changeDirectory(char *directory);
 int mySetEnv(char *var, char *value);
 int myUnsetEnv(char *var);
+void set_env(char **args);
+void unset_env(char **args);
 char **tokenize(char *str, char *delimiter);
 unsigned int _strlen(char *str);
 char *_strcpy(char *dest, char *src);

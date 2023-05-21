@@ -40,13 +40,3 @@ char *myGetLine()
 	}
 	return (line);
 }
-/*int main(void) {
-  char *line;
-
-  while ((line = myGetLine()) != NULL) {
-  printf("%s\n", line);
-  free(line);
-  }
-
-  return 0;
-  }*/
