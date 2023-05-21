@@ -37,15 +37,10 @@ int main()
 		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
-		{/*Handle exit command*/
-			status = EXIT_SUCCESS;
-			if (args[1] != NULL)
-			{/*If argument is provided*/
-				status = _atoi(args[1]);/*Convert to integer*/
-			}
-			exit(status);/*Exit the shell with given status*/
+		{	
+			check_exit(args);
 		}
-		else if (_strcmpr(args[0], "env") == 0)
+		if (_strcmpr(args[0], "env") == 0)
 		{/*Handle env command*/
 			printEnv();
 			continue;

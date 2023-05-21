@@ -29,6 +29,7 @@ static char * append_float(char *buf, double num);*/
 
 int clear();
 void printPrompt();
+void check_exit(char **args);
 void parseInput(char *buffer, char **args);
 char *getAbsolutePath(char *command);
 int executeCommand(char *cmd, char **args);
