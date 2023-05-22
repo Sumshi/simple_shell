@@ -88,7 +88,7 @@ int _snprintf(char *str, size_t size, const char *format, ...)
 	int ret;
 
 	va_start(args, format);
-	ret = my_vsnprintf(str, size, format, args);
+	ret = vsnprintf(str, size, format, args);
 	va_end(args);
 
 	return (ret);
@@ -105,7 +105,7 @@ int _sprintf(char *str, const char *format, ...)
 	int result;
 
 	va_start(args, format);
-	result = _vsprintf(str, format, args);
+	result = vsprintf(str, format, args);
 	va_end(args);
 	return (result);
 }
