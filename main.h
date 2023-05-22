@@ -16,8 +16,18 @@
 #include <stddef.h>
 #define BUFFER_SIZE 1024
 #define MAX_ARGS 100
-
-
+#define MAX_ALIASES 100
+/*alias*/
+typedef struct Alias
+{
+	char *name;
+	char *value;
+} Alias;
+void printAliases();
+void printAlias(char *name);
+void addAlias(char *name, char *value);
+void aliasCommand(char **args);
+void executeAlias(char *name);
 /*functions*/
 extern char **environ;
 int clear(void);
@@ -33,7 +43,6 @@ int myUnsetEnv(char *var);
 void set_env(char **args);
 void unset_env(char **args);
 char **tokenize(char *str, char *delimiter);
-int executeWithLogicalOperators(char **args);
 /*string functions*/
 unsigned int _strlen(char *str);
 char *_strcpy(char *dest, char *src);
