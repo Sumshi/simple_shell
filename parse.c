@@ -1,7 +1,7 @@
 #include "main.h"
 /**
  * parseInput - tokenizes the input
- * @buffer: stores the command
+ * @input: input passed.
  * @args: arguments passes
  * Return: Always 0.
  */
@@ -13,6 +13,7 @@ void parseInput(char *input, char **args)
 	int j;
 	char pid[10];
 	char exit_status[10];
+
 	token = _strtok(input, " ");
 	while (token != NULL)
 	{

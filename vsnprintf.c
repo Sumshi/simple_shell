@@ -1,96 +1,51 @@
 #include "main.h"
 /**
  * my_vsnprintf - vsnprintf implementation
- * @buf: string
- * @size: size of string
- * @format: character string
- * @arg: variadic list
- * Return: number of characters
+ * @buf: The buffer to write to
+ * @size: The size of the buffer
+ * @format: The format string
+ * @arg: The variadic argument list
+ * Return: The number of characters written
  */
-int my_vsnprintf(char *buf, size_t size, const char *format, va_list arg) 
+int my_vsnprintf(char *buf, size_t size, const char *format, va_list arg)
 {
-	int written = 0;/*Number of characters written to the buffer*/
-	size_t remaining = size > 0 ? size - 1 : 0;/*Remaining space in the buffer (excluding null-terminating character)*/
+	int written = 0;
+	size_t remaining = size > 0 ? size - 1 : 0;
 
-	while (*format != '\0' && remaining > 0) {
-		if (*format == '%') {
-			format++;/*Move past the '%'*/
-
+	while (*format != '\0' && remaining > 0)
+	{
+		if (*format == '%')
+		{
+			format++; /* Move past the '%' */
 			if (*format == '\0')
-				break;/*Unexpected end of format string*/
-
-			if (*format == '%') {
-				/*Handle "%%" - output a single '%'*/
-				if (remaining > 0) {
-					*buf++ = '%';
-					written++;
-					remaining--;
-				}
+				break; /* Unexpected end of format string */
+			if (*format == '%')
+			{
+				write_character(&buf, '%', &remaining, &written);
 				format++;
 				continue;
 			}
+			if (*format == 's')
+			{
+				char *arg_str = va_arg(arg, char *);
 
-			/*Handle other format specifiers*/
-			/*Here, let's assume we only support "%s" for strings and "%d" for integers*/
-
-			if (*format == 's') {
-				char* arg_str = va_arg(arg, char*);
-				while (*arg_str != '\0' && remaining > 0) {
-					*buf++ = *arg_str++;
-					written++;
-					remaining--;
-				}
+				write_str(&buf, arg_str, &remaining, &written);
 				format++;
 				continue;
 			}
-
-			if (*format == 'd') {
+			if (*format == 'd')
+			{
 				int arg_int = va_arg(arg, int);
-				/*Convert the integer to a string representation*/
-				char int_str[12];/*Maximum number of characters for a 32-bit integer*/
-				int chars_written = 0;
-				bool is_negative = arg_int < 0;
-				if (is_negative)
-					arg_int = -arg_int;
-				do {
-					int digit = arg_int % 10;
-					int_str[chars_written++] = '0' + digit;
-					arg_int /= 10;
-				} while (arg_int != 0);
 
-				if (is_negative) {
-					if (remaining > 0) {
-						*buf++ = '-';
-						written++;
-						remaining--;
-					}
-				}
-
-				while (chars_written > 0 && remaining > 0) {
-					chars_written--;
-					if (remaining > 0) {
-						*buf++ = int_str[chars_written];
-						written++;
-						remaining--;
-					}
-				}
-
+				write_int(&buf, arg_int, &remaining, &written);
 				format++;
 				continue;
 			}
 		}
 
-		/*Normal character - copy to the buffer*/
-		if (remaining > 0) {
-			*buf++ = *format++;
-			written++;
-			remaining--;
-		}
+		write_character(&buf, *format++, &remaining, &written);
 	}
-
-	/*Null-terminate the buffer*/
 	if (size > 0)
 		*buf = '\0';
-
-	return written;
+	return (written);
 }

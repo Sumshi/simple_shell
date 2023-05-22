@@ -1,5 +1,9 @@
 #include "main.h"
-
+/**
+ * check_exit - checks exit
+ * @args: argument vector
+ * Return: void
+ */
 void check_exit(char **args)
 {
 	int stats;
@@ -11,7 +15,11 @@ void check_exit(char **args)
 	}
 	exit(stats);
 }
-
+/**
+ * set_env - sets environment
+ * @args: argument vector
+ * Return: void
+ */
 void set_env(char **args)
 {
 	char *msg;
@@ -26,10 +34,15 @@ void set_env(char **args)
 
 	}
 }
-
+/**
+ * unset_env - unsets environment
+ * @args: argument vector
+ * Return: void
+ */
 void unset_env(char **args)
 {
 	char *msg;
+
 	if (args[1] == NULL)
 	{
 		msg = "Usage: unsetenv VARIABLE\n";
@@ -40,4 +53,3 @@ void unset_env(char **args)
 
 	}
 }
-

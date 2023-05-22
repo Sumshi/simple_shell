@@ -4,11 +4,10 @@
  *
  * Return: Always 0.
  */
-char *myGetLine()
+char *myGetLine(void)
 {
 	static char buffer[BUFFER_SIZE];
-	static int pos;
-	static int bytesRead;
+	static int pos, bytesRead;
 	char *line = NULL;
 	int lineSize = 0;
 	char c;
@@ -24,7 +23,7 @@ char *myGetLine()
 				exit(EXIT_FAILURE);
 			}
 			if (bytesRead == 0)
-			{/*End of input*/
+			{
 				break;
 			}
 			pos = 0;/*Reset position to start of buffer*/
@@ -35,7 +34,7 @@ char *myGetLine()
 			line[lineSize] = '\0';
 			break;
 		}
-		line = realloc(line, ++lineSize);/*Expand line buffer as needed*/
+		line = my_realloc(line, lineSize, lineSize + 1);
 		line[lineSize - 1] = c;
 	}
 	return (line);
