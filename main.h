@@ -17,6 +17,7 @@
 #define BUFFER_SIZE 1024
 #define MAX_ARGS 100
 #define MAX_ALIASES 100
+
 /*alias*/
 typedef struct Alias
 {
@@ -54,6 +55,9 @@ char *_strdup(char *strtodup);
 size_t _strcspn(const char *str1, const char *str2);
 int _strncmp(const char *str1, const char *str2, size_t n);
 int _atoi(char *str);
+int int_to_string(char *str, int num);
+void reverse_string(char *str, int length);
+void write_string(char *dest, char *src, int len);
 /*printf family functions*/
 int _snprintf(char *str, size_t size, const char *format, ...);
 int _sprintf(char *str, const char *format, ...);
@@ -64,7 +68,7 @@ void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 /* vsprintf functions*/
 char *s_itoa(int num, char *str);
 int write_integer(char **str, int num);
-int write_string(char **str, const char *s);
+/*int write_string(char **str, const char *s);*/
 int write_char(char **str, char c);
 int write_float(char **str, float num);
 int write_float_decimal(char **str, double num);

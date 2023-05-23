@@ -60,11 +60,6 @@ int main()
 			unset_env(args);
 			continue;
 		}
-		else if (_strcmpr(args[0], "alias") == 0)
-		{
-			aliasCommand(args);
-			continue;
-		}
 		else if (_strcmpr(args[0], "clear") == 0)
 		{
 			clear_requested = 1;/*executes clear()*/
