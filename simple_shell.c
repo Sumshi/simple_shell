@@ -10,7 +10,9 @@ int main()
 	int clear_requested = 0;
 	char *cmd;
 	char *msg;
+	int num_aliases = 0;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
+	Alias aliases[MAX_ALIASES];
 	while (1)
 	{
 		if (clear_requested)
@@ -60,11 +62,11 @@ int main()
 			unset_env(args);
 			continue;
 		}
-		else if (_strcmpr(args[0], "alias") == 0)
+		/*else if (_strcmpr(args[0], "alias") == 0)
 		{
 			aliasCommand(args);
 			continue;
-		}
+		}*/
 		else if (_strcmpr(args[0], "clear") == 0)
 		{
 			clear_requested = 1;/*executes clear()*/

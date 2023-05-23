@@ -23,11 +23,13 @@ typedef struct Alias
 	char *name;
 	char *value;
 } Alias;
+/*alias*/
 void printAliases();
 void printAlias(char *name);
 void addAlias(char *name, char *value);
 void aliasCommand(char **args);
 void executeAlias(char *name);
+void displayAliases();
 /*functions*/
 extern char **environ;
 int clear(void);
