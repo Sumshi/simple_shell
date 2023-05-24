@@ -1,4 +1,4 @@
-				SIMPLE SHELL 
+				SIMPLE SHELL
 The C-shell is a wheel re-invention of the Thompson and Bourne shells and works almost simillarly to this shells.
 //changes will be made in bits as we try to improve this code.
 			Usage:

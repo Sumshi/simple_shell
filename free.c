@@ -20,9 +20,9 @@ int freedata(main_t *data)
 	return (0);
 }
 /**
- * fill_an_array - fill an array with elements
+ * array_build- fill an array with elements
  * @a: the given array
- * @el: the given element
+ * @element: the given element
  * @len: the length of the array
  *
  * Return: pointer to filled array
