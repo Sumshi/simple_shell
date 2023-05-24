@@ -1,49 +1,84 @@
 #include "main.h"
-/**
- * getLine - gets line
- * Return: bytes read
- **/
-char *getLine()
-{
-	static char buffer[BUFFER_SIZE];
-	static size_t position, bytesRead;
-	char *line = NULL;
-	size_t lineLength = 0, i;
 
-	while (1)
+/**
+ * bring_line - assigns the line var for get_line
+ * @lineptr: Buffer that store the input str
+ * @buffer: str that is been called to line
+ * @n: size of line
+ * @j: size of buffer
+ */
+void bring_line(char **lineptr, size_t *n, char *buffer, size_t j)
+{
+
+	if (*lineptr == NULL)
 	{
-		if (position >= bytesRead)
+		if  (j > BUFSIZE)
+			*n = j;
+
+		else
+			*n = BUFSIZE;
+		*lineptr = buffer;
+	}
+	else if (*n < j)
+	{
+		if (j > BUFSIZE)
+			*n = j;
+		else
+			*n = BUFSIZE;
+		*lineptr = buffer;
+	}
+	else
+	{
+		_strcpy(*lineptr, buffer);
+		free(buffer);
+	}
+}
+/**
+ * get_line - Read inpt from stream
+ * @lineptr: buffer that stores the input
+ * @n: size of lineptr
+ * @stream: stream to read from
+ * Return: The number of bytes
+ */
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
+{
+	int i;
+	static ssize_t input;
+	ssize_t retval;
+	char *buffer;
+	char t = 'z';
+
+	if (input == 0)
+		fflush(stream);
+	else
+		return (-1);
+	input = 0;
+
+	buffer = malloc(sizeof(char) * BUFSIZE);
+	if (buffer == 0)
+		return (-1);
+	while (t != '\n')
+	{
+		i = read(STDIN_FILENO, &t, 1);
+		if (i == -1 || (i == 0 && input == 0))
 		{
-			bytesRead = read(STDIN_FILENO, buffer, BUFFER_SIZE);
-			position = 0;
-			if (bytesRead == 0)
-			{
-				break;
-			}
-			else if (bytesRead == (size_t)-1)
-			{
-				perror("Error from read");
-				exit(EXIT_FAILURE);
-			}
+			free(buffer);
+			return (-1);
 		}
-		if (buffer[position] == '\n')
+		if (i == 0 && input != 0)
 		{
-			line = malloc((lineLength + 1) * sizeof(char));
-			if (line == NULL)
-			{
-				perror("Memory allocation error");
-				exit(EXIT_FAILURE);
-			}
-			for (i = 0; i < lineLength; i++)
-			{
-				line[i] = buffer[i];
-			}
-			line[lineLength] = '\0';
-			position++;
+			input++;
 			break;
 		}
-		lineLength++;
-		position++;
+		if (input >= BUFSIZE)
+			buffer = my_realloc(buffer, input, input + 1);
+		buffer[input] = t;
+		input++;
 	}
-	return (line);
+	buffer[input] = '\0';
+	bring_line(lineptr, n, buffer, input);
+	retval = input;
+	if (i != 0)
+		input = 0;
+	return (retval);
 }
