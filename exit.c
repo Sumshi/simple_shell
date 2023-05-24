@@ -6,9 +6,5 @@
  **/
 void exitShell(int exitStatus)
 {
-	if (exitStatus < 0 || exitStatus > 255)
-	{
-		perror("invalid exit status");
-	}
 	exit(exitStatus);
 }
