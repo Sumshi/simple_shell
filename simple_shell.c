@@ -10,6 +10,7 @@ int main()
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
+	int is_terminal = isatty(STDIN_FILENO);
 	while (1)
 	{
 		if (clear_requested)
@@ -17,7 +18,10 @@ int main()
 			clear();
 			clear_requested = 0;
 		}
-		printPrompt();
+		if (is_terminal)
+		{
+			printPrompt();
+		}
 		length = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (length == -1)
 		{
@@ -26,7 +30,11 @@ int main()
 		}
 		if (length == 0)
 		{
-			/*_putchar('\n');*/
+			if (is_terminal)
+			{
+				_putchar('\n');
+			}
+			perror("end of file");
 			break;/*end of file*/
 		}
 		if (buffer[length - 1] == '\n')
