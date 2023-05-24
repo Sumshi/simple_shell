@@ -32,6 +32,10 @@ int main()
 		{/*REMOVES NEW LINE*/
 			buffer[length - 1] = '\0';
 		}
+		if (isComment(buffer))
+		{
+			continue;
+		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
 		{	

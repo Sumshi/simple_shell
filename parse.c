@@ -17,10 +17,10 @@ void parseInput(char *input, char **args)
 	token = _strtok(input, " ");
 	while (token != NULL)
 	{
-		if (token[0] == '#')
+		/*if (token[0] == '#')
 		{
 			break;
-		}
+		}*/
 		args[i++] = token;
 		token = _strtok(NULL, " ");
 	}

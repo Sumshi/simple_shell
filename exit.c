@@ -8,3 +8,12 @@ void exitShell(int exitStatus)
 {
 	exit(exitStatus);
 }
+/**
+ * isComment - checks for comments
+ * @line: value
+ * Return: line
+ **/
+int isComment(const char *line)
+{
+	return (line[0] == '#');
+}
