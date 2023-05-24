@@ -78,9 +78,7 @@ int write_float_decimal(char **str, double num);
 int write_to_str(char **str, char type, va_list arg);
 char parse_format_specifier(const char **p);
 /*getline*/
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char *getLine();
 /* vsnprintf functions*/
 void write_character(char **buf, char ch, size_t *remaining, int *written);
 void write_str(char **buf, const char *str, size_t *remaining, int *written);
