@@ -19,28 +19,41 @@ int isComment(const char *line)
 }
 void handleVariables(char **args, int last_exit_status)
 {
-	int j;
-	char pid[10];
-	char exit_status[10];
+    int i;
+    char pid[10];
+    char exit_status[10];
 
-	/*Replace $?, $$, and $PATH variables*/
-	for (j = 0; args[j] != NULL; j++)
-	{
-		if (_strcmpr(args[j], "$?") == 0)
-		{
-			int len = int_to_string(exit_status, last_exit_status);
-			write_string(args[j], exit_status, len);
-		}
-		else if (_strcmpr(args[j], "$$") == 0)
-		{
-			int len = int_to_string(pid, getpid());
-			write_string(args[j], pid, len);
-		}
-		else if (_strcmpr(args[j], "$PATH") == 0)
-		{
-			args[j] = _strdup(getenv("PATH"));
-		}
-	}
+    for (i = 0; args[i] != NULL; i++)
+    {
+        if (_strcmpr(args[i], "$?") == 0)
+        {
+            int len = int_to_string(exit_status, last_exit_status);
+            write_string(args[i], exit_status, len);
+        }
+        else if (_strcmpr(args[i], "$$") == 0)
+        {
+            int len = int_to_string(pid, getpid());
+            write_string(args[i], pid, len);
+        }
+        else if (args[i][0] == '$')
+        {
+            char *variable = &args[i][1];
+            char *value = getenv(variable);
+            if (value != NULL)
+            {
+                args[i] = _strdup(value);
+                if (args[i] == NULL)
+                {
+                    fprintf(stderr, "Error: Memory allocation failed\n");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            else
+            {
+                fprintf(stderr, "Error: Variable '%s' is undefined\n", variable);
+            }
+        }
+    }
 }
 void parseInput(char *input, char **args)
 {
