@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * check_exit - checks exit
  * @args: argument vector
@@ -6,14 +7,14 @@
  */
 void check_exit(char **args)
 {
-	int stats;
+	int status;
 
-	stats = EXIT_SUCCESS;
+	status = EXIT_SUCCESS;
 	if (args[1] != NULL)
 	{
-		stats = _atoi(args[1]);
+		status = _atoi(args[1]);
 	}
-	exit(stats);
+	exit(status);
 }
 /**
  * set_env - sets environment

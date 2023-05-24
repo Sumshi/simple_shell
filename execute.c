@@ -21,10 +21,15 @@ int executeCommand(char *cmd, char **args)
 	else if (pid < 0)
 	{
 		perror("fork");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		if (waitpid(pid, &status, 0) == -1)
+		{
+			perror("waitpid");
+			exit(EXIT_FAILURE);
+		}
 		last_exit_status = WEXITSTATUS(status);
 	}
 	return (last_exit_status);

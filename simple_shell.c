@@ -3,13 +3,14 @@
  * main - check the code
  * Return: Always 0.
  */
-int main()
+int main(void)
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
+
 	while (1)
 	{
 		if (clear_requested)
@@ -34,7 +35,7 @@ int main()
 		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
-		{	
+		{
 			check_exit(args);
 		}
 		if (_strcmpr(args[0], "env") == 0)
