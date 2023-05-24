@@ -17,7 +17,7 @@
 #define BUFFER_SIZE 1024
 #define MAX_ARGS 100
 #define MAX_ALIASES 100
-
+#define BUFSIZE 1024
 /*alias*/
 typedef struct AliasNode
 {
@@ -26,16 +26,11 @@ typedef struct AliasNode
 	struct AliasNode *next;
 } AliasNode;
 
-void printAliases();
-void addAlias(char *aliasName, char *aliasValue);
-void removeAlias(char *aliasName);
-char *getAliasValue(char *aliasName);
-void freeAliases();
-void handleAlias(char **args);
+extern int last_exit_status;
 /*functions*/
 void exitShell(int exitStatus);
 int isComment(const char *line);
-void handleVariables(char **args, int last_exit_status);
+char *handleVariables(char *input);
 extern char **environ;
 int clear(void);
 void printPrompt(void);
@@ -72,16 +67,10 @@ void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 /* vsprintf functions*/
 char *s_itoa(int num, char *str);
 int write_integer(char **str, int num);
-/*int write_string(char **str, const char *s);*/
-int write_char(char **str, char c);
-int write_float(char **str, float num);
-int write_float_decimal(char **str, double num);
-int write_to_str(char **str, char type, va_list arg);
-char parse_format_specifier(const char **p);
 /*getline*/
-char *getLine();
-/* vsnprintf functions*/
-void write_character(char **buf, char ch, size_t *remaining, int *written);
-void write_str(char **buf, const char *str, size_t *remaining, int *written);
-void write_int(char **buf, int value, size_t *remaining, int *written);
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
+void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
+void _memcpy(void *newptr, const void *ptr, unsigned int size);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char **_reallocdp(char **ptr, unsigned int old_size, unsigned int new_size);
 #endif

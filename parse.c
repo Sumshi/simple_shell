@@ -5,7 +5,7 @@
  * @args: arguments passes
  * Return: Always 0.
  */
-/*void parseInput(char *input, char **args)
+void parseInput(char *input, char **args)
 {
 	int last_exit_status = 0;
 	char *token;
@@ -17,11 +17,15 @@
 	token = _strtok(input, " ");
 	while (token != NULL)
 	{
+		if (token[0] == '#')
+		{
+			break;
+		}
 		args[i++] = token;
 		token = _strtok(NULL, " ");
 	}
 	args[i] = NULL;
-	Replace $?, $$ and $PATH variables 
+	/* Replace $?, $$ and $PATH variables */
 	for (j = 0; args[j] != NULL; j++)
 	{
 		if (_strcmpr(args[j], "$?") == 0)
@@ -41,7 +45,7 @@
 			args[j] = _strdup(getenv("PATH"));
 		}
 	}
-}*/
+}
 
 /**
  * int_to_string - converts an integer to a string

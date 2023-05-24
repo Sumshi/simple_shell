@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * _getline - getline implementation
  * @lineptr: pointer to a line pointer
