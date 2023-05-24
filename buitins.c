@@ -9,18 +9,9 @@ void check_exit(char **args)
 	int stats;
 
 	stats = EXIT_SUCCESS;
-	if (args[1] != NULL && args[1][0] != '\0')
+	if (args[1] != NULL)
 	{
-		char *endptr;
-		long val = strtol(args[1], &endptr, 10);
-
-		if (*endptr != '\0' || val > INT_MAX || val < INT_MIN)
-		{
-			fprintf(stderr, "Invalid argument: %s\n", args[1]);
-			return;
-		}
-
-		stats = (int)val;
+		stats = _atoi(args[1]);
 	}
 	exit(stats);
 }
