@@ -7,6 +7,7 @@ int main()
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
+	int i;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
@@ -40,6 +41,10 @@ int main()
 		if (isComment(buffer))
 		{
 			continue;
+		}
+		for (i = 0; i < MAX_ARGS + 1; i++)
+		{
+			args[i] = NULL;
 		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
