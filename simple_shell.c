@@ -11,7 +11,6 @@ int main(void)
 	char *cmd, *msg;
 	int last_exit_status = 0;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
-
 	while (1)
 	{
 		if (clear_requested)
@@ -40,6 +39,17 @@ int main(void)
 		}
 		parseInput(buffer, args);
 		handleVariables(args, last_exit_status);
+		if (_strcmpr(args[0], "exit") == 0)
+		{	
+			int exitStatus = 0;
+
+			if (args[1] != NULL)
+			{
+				exitStatus = _atoi(args[1]);
+			}
+			exitShell(exitStatus);
+			break;
+		}
 		if (_strcmpr(args[0], "env") == 0)
 		{/*Handle env command*/
 			printEnv();

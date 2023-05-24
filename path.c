@@ -6,12 +6,10 @@
  */
 char *getAbsolutePath(char *command)
 {
-	const int MAX_PATHS = MAX_ARGS + 2;
-	char *pathDirectory[MAX_PATHS];
-	int numDirectory = 0, i, j;
+	char *pathDirectory[MAX_ARGS + 2];
+	int numDirectory = 0, i;
 	char *token, *pathEnvVar;
 	char tempCmd[BUFFER_SIZE];
-	char *pathEnvCopy;
 
 	if (command[0] == '/')
 	{
@@ -19,20 +17,14 @@ char *getAbsolutePath(char *command)
 	}
 	pathDirectory[numDirectory++] = "/bin"; /* add /bin to search path */
 	pathEnvVar = getenv("PATH");
-	if (pathEnvVar == NULL)
-	{
-		return (NULL);
-	}
-	pathEnvCopy == _strdup(pathEnvVar);
-	if (pathEnvCopy == NULL)
-	{
-		return (NULL);
-	}
-
 	token = _strtok(pathEnvVar, ":");
-	while (token != NULL && numDirectory < MAX_PATHS - 1)
+	while (token != NULL)
 	{
-		pathDirectory[numDirectory++] = _strdup(token);
+		pathDirectory[numDirectory++] = token;
+		if (numDirectory >= MAX_ARGS + 1)
+		{ /* increase size check accordingly */
+			break;
+		}
 		token = _strtok(NULL, ":");
 	}
 	pathDirectory[numDirectory] = NULL;
@@ -50,18 +42,8 @@ char *getAbsolutePath(char *command)
 		_strcpy(tempCmd + pathLen + 1, command);
 		if (access(tempCmd, X_OK) == 0)
 		{
-			free(pathEnvCopy);
-			for (j = 0; j < numDirectory; j++)
-			{
-				free(pathDirectory[j]);
-			}
 			return (_strdup(tempCmd));
 		}
-	}
-	free(pathEnvCopy);
-	for (j = 0; j < numDirectory; j++)
-	{
-		free(pathDirectory[j]);
 	}
 	return (NULL);
 }

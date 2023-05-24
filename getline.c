@@ -1,49 +1,71 @@
 #include "main.h"
 /**
- * getLine - gets line
- * Return: bytes read
- **/
-char *getLine()
+ * _getline - getline implementation
+ * @lineptr: pointer to a line pointer
+ * @n: string.
+ * Return: number of bytes read excluding null terminator.
+ */
+ssize_t _getline(char **lineptr, size_t *n)
 {
 	static char buffer[BUFFER_SIZE];
-	static size_t position, bytesRead;
-	char *line = NULL;
-	size_t lineLength = 0, i;
+	static int buffer_pos;
+	static int buffer_size;
+	char *line;
+	size_t line_size, line_pos;
+	int newline_found;
+	char c;
+
+	if (*n == 0 || *lineptr == NULL)
+	{
+		return (-1);
+	}
+	line = *lineptr;
+	line_size = *n;
+	line_pos = 0;
+	newline_found = 0;
 
 	while (1)
 	{
-		if (position >= bytesRead)
+		if (buffer_pos >= buffer_size)
 		{
-			bytesRead = read(STDIN_FILENO, buffer, BUFFER_SIZE);
-			position = 0;
-			if (bytesRead == 0)
+			buffer_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+			if (buffer_size <= 0)
 			{
-				break;
+				if (line_pos == 0 || !newline_found)
+				{
+					return (-1);
+				}
+				else
+				{
+					break;
+				}
 			}
-			else if (bytesRead == (size_t)-1)
-			{
-				perror("Error from read");
-				exit(EXIT_FAILURE);
-			}
+			buffer_pos = 0;
 		}
-		if (buffer[position] == '\n')
+		c = buffer[buffer_pos++];
+		if (line_pos + 1 >= line_size)
 		{
-			line = malloc((lineLength + 1) * sizeof(char));
-			if (line == NULL)
+			size_t new_line_size = line_size * 2;
+			char *new_line = my_realloc(line, line_size, new_line_size);
+			if (new_line == NULL)
 			{
-				perror("Memory allocation error");
-				exit(EXIT_FAILURE);
+				return (-1);
 			}
-			for (i = 0; i < lineLength; i++)
-			{
-				line[i] = buffer[i];
-			}
-			line[lineLength] = '\0';
-			position++;
+			line = new_line;
+			line_size = new_line_size;
+		}
+		line[line_pos++] = c;
+
+		if (c == '\n')
+		{
+			newline_found = 1;
 			break;
 		}
-		lineLength++;
-		position++;
 	}
-	return (line);
+	line[line_pos] = '0';
+
+	*lineptr = line;
+	*n = line_size;
+
+	return (line_pos);
 }
