@@ -5,7 +5,7 @@
  * @args: argument vector
  * Return: void
  */
-void check_exit(char **args)
+/*void check_exit(char **args)
 {
 	int status;
 
@@ -15,7 +15,8 @@ void check_exit(char **args)
 		status = _atoi(args[1]);
 	}
 	exit(status);
-}
+}*/
+
 /**
  * set_env - sets environment
  * @args: argument vector

@@ -7,30 +7,47 @@
  */
 int executeCommand(char *cmd, char **args)
 {
-	int last_exit_status = 0;
+	char *absolutePath = getAbsolutePath(cmd);
 	pid_t pid;
 	int status;
 
-	pid = fork();
-	if (pid == 0)
+	if (absolutePath == NULL)
 	{
-		execve(cmd, args, NULL);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		/*command not found || error occured*/
+		return (-1);
 	}
-	else if (pid < 0)
+
+	if (access(absolutePath, X_OK) != 0)
+	{
+		free(absolutePath);
+		return (-1);
+	}
+
+	pid = fork();
+	if (pid == -1)
 	{
 		perror("fork");
+		free(absolutePath);
+		return (-1);
+	}
+	else if (pid == 0)
+	{
+		execve(absolutePath, args, NULL);
+		perror("execve");
+		free(absolutePath);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		if (waitpid(pid, &status, 0) == -1)
+		waitpid(pid, &status, 0);
+		free(absolutePath);
+		if (WIFEXITED(status))
 		{
-			perror("waitpid");
-			exit(EXIT_FAILURE);
+			return (WEXITSTATUS(status));
 		}
-		last_exit_status = WEXITSTATUS(status);
+		else
+		{
+			return (-1);
+		}
 	}
-	return (last_exit_status);
 }

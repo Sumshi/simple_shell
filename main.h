@@ -33,6 +33,9 @@ char *getAliasValue(char *aliasName);
 void freeAliases();
 void handleAlias(char **args);
 /*functions*/
+void exitShell(int exitStatus);
+int isComment(const char *line);
+void handleVariables(char **args, int last_exit_status);
 extern char **environ;
 int clear(void);
 void printPrompt(void);
@@ -64,8 +67,6 @@ void write_string(char *dest, char *src, int len);
 /*printf family functions*/
 int _snprintf(char *str, size_t size, const char *format, ...);
 int _sprintf(char *str, const char *format, ...);
-int _vsprintf(char *str, const char *fmt, va_list arg);
-int my_vsnprintf(char *buf, size_t size, const char *format, va_list arg);
 /*dynamic memoery allocations funcs*/
 void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 /* vsprintf functions*/
@@ -77,6 +78,8 @@ int write_float(char **str, float num);
 int write_float_decimal(char **str, double num);
 int write_to_str(char **str, char type, va_list arg);
 char parse_format_specifier(const char **p);
+/*getline*/
+char *getLine();
 /* vsnprintf functions*/
 void write_character(char **buf, char ch, size_t *remaining, int *written);
 void write_str(char **buf, const char *str, size_t *remaining, int *written);

@@ -1,41 +1,49 @@
 #include "main.h"
 /**
- * myGetLine - my getline function
- *
- * Return: Always 0.
- */
-char *myGetLine(void)
+ * getLine - gets line
+ * Return: bytes read
+ **/
+char *getLine()
 {
 	static char buffer[BUFFER_SIZE];
-	static int pos, bytesRead;
+	static size_t position, bytesRead;
 	char *line = NULL;
-	int lineSize = 0;
-	char c;
+	size_t lineLength = 0, i;
 
 	while (1)
 	{
-		if (pos == bytesRead)
+		if (position >= bytesRead)
 		{
 			bytesRead = read(STDIN_FILENO, buffer, BUFFER_SIZE);
-			if (bytesRead == -1)
-			{
-				perror("Error from read");
-				exit(EXIT_FAILURE);
-			}
+			position = 0;
 			if (bytesRead == 0)
 			{
 				break;
 			}
-			pos = 0;/*Reset position to start of buffer*/
+			else if (bytesRead == (size_t)-1)
+			{
+				perror("Error from read");
+				exit(EXIT_FAILURE);
+			}
 		}
-		c = buffer[pos++];
-		if (c == '\n')
+		if (buffer[position] == '\n')
 		{
-			line[lineSize] = '\0';
+			line = malloc((lineLength + 1) * sizeof(char));
+			if (line == NULL)
+			{
+				perror("Memory allocation error");
+				exit(EXIT_FAILURE);
+			}
+			for (i = 0; i < lineLength; i++)
+			{
+				line[i] = buffer[i];
+			}
+			line[lineLength] = '\0';
+			position++;
 			break;
 		}
-		line = my_realloc(line, lineSize, lineSize + 1);
-		line[lineSize - 1] = c;
+		lineLength++;
+		position++;
 	}
 	return (line);
 }
