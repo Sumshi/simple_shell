@@ -26,16 +26,11 @@ typedef struct AliasNode
 	struct AliasNode *next;
 } AliasNode;
 
-void printAliases();
-void addAlias(char *aliasName, char *aliasValue);
-void removeAlias(char *aliasName);
-char *getAliasValue(char *aliasName);
-void freeAliases();
-void handleAlias(char **args);
+extern int last_exit_status;
 /*functions*/
 void exitShell(int exitStatus);
 int isComment(const char *line);
-void handleVariables(char **args, int last_exit_status);
+char *handleVariables(char *input);
 extern char **environ;
 int clear(void);
 void printPrompt(void);
