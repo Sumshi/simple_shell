@@ -18,13 +18,47 @@
 #define MAX_ARGS 100
 #define MAX_ALIASES 100
 #define BUFSIZE 1024
+#define FAIL (-1)
+#define SUCCESS (1)
+#define PRINT(c) (write(STDOUT_FILENO, c, _strlen(c)))
+#define PROMPT "$ "
 /*alias*/
+/**
+ * struct AliasNode - Alias node
+ * @aliasName: name
+ * @aliasValue: value
+ * @next: to the next node
+ */
 typedef struct AliasNode
 {
 	char *aliasName;
 	char *aliasValue;
 	struct AliasNode *next;
 } AliasNode;
+
+
+/**
+ * struct shell_data - Global data structure
+ * @line: the line input
+ * @args: the arguments token
+ * @error_msg: the global path
+ * @cmd: the parsed command
+ * @index: the command index
+ * @oldpwd: the old path visited
+ * @env: the environnment
+ * Description: A structure contains all the variables needed to manage
+ *		the program, memory and accessability
+ */
+typedef struct shell_data
+{
+	char *line;
+	char **args;
+	char *cmd;
+	char *error_msg;
+	char *oldpwd;
+	unsigned long int index;
+	char *env;
+} main_t;
 
 extern int last_exit_status;
 /*functions*/
@@ -69,7 +103,11 @@ void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 char *s_itoa(int num, char *str);
 int write_integer(char **str, int num);
 /*getline*/
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char *mem_cpy(char *dest, char *src, unsigned int i);
+char *mem_set(char *str, char bytes, unsigned int i);
+int freedata(main_t *data);
+void *array_build(void *a, int element, unsigned int len);
+ssize_t my_getline(main_t *data);
+
+
 #endif

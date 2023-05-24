@@ -8,44 +8,63 @@
  */
 void *my_realloc(void *ptr, unsigned int size, unsigned int newsize)
 {
-	void *memory;
-	char *ptr_cpy;
-	char *fill;
-	unsigned int idx;
+	void *result;
 
 	if (newsize == size)
-	{
 		return (ptr);
+	if (newsize == 0 && ptr)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	result = malloc(newsize);
+	if (result == NULL)
+	{
+		return (NULL);
 	}
 	if (ptr == NULL)
 	{
-		memory = malloc(newsize);
-		if (memory == NULL)
-		{
-			return (NULL);
-		}
-		return (memory);
-	}
-	if (newsize == 0 && ptr != NULL)
-	{
+		array_build(result, '\0', newsize);
 		free(ptr);
-		return (NULL);
 	}
-	ptr_cpy = ptr;
-	memory = malloc(newsize);
-	if (memory == NULL)
+	else
 	{
+		mem_cpy(result, ptr, size);
 		free(ptr);
-		return (NULL);
 	}
+	return (result);
+}
+/**
+ * mem_cpy - coipes memory
+ * @dest: destination
+ * @src: source
+ * @i: memory bytes
+ * Return: pointer to dest
+ */
+char *mem_cpy(char *dest, char *src, unsigned int i)
+{
+	unsigned int k;
 
-	fill = memory;
-	idx = 0;
-	while (idx < size && idx < newsize)
+	for (k = 0; k < i; k++)
 	{
-		fill[idx] = *ptr_cpy++;
-		idx++;
+		dest[k] = src[k];
 	}
-	free(ptr);
-	return (memory);
+	return (dest);
+}
+/**
+ * mem_set - fills memory with bytes
+ * @str: pointer to mem area
+ * @bytes: constant byte
+ * @i: first n bytes
+ * Return: pointer to character
+ */
+char *mem_set(char *str, char bytes, unsigned int i)
+{
+	unsigned int k;
+
+	for (k = 0; k < i; k++)
+	{
+		str[k] = bytes;
+	}
+	return (str);
 }
