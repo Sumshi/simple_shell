@@ -21,8 +21,9 @@ int main()
 		length = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (length == -1)
 		{
+			/*write(STDOUT_FILENO, "\n", 2);*/
 			perror("Error from read");
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		if (length == 0)
 		{
