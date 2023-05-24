@@ -35,6 +35,7 @@ void handleAlias(char **args);
 /*functions*/
 void exitShell(int exitStatus);
 int isComment(const char *line);
+void handleVariables(char **args, int last_exit_status);
 extern char **environ;
 int clear(void);
 void printPrompt(void);

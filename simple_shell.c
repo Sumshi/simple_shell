@@ -9,6 +9,7 @@ int main()
 	ssize_t length;
 	int clear_requested = 0;
 	char *cmd, *msg;
+	int last_exit_status = 0;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
 	while (1)
 	{
@@ -37,6 +38,7 @@ int main()
 			continue;
 		}
 		parseInput(buffer, args);
+		handleVariables(args, last_exit_status);
 		if (_strcmpr(args[0], "exit") == 0)
 		{	
 			int exitStatus = 0;
