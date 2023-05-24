@@ -26,7 +26,7 @@ int main()
 		}
 		if (length == 0)
 		{
-			_putchar('\n');
+			/*_putchar('\n');*/
 			break;/*end of file*/
 		}
 		if (buffer[length - 1] == '\n')
