@@ -22,7 +22,7 @@ char **tokenize(char *str, char *delimiter)
 	}
 	while (1)
 	{
-		token = strtok(str, delimiter);
+		token = _strtok(str, delimiter);
 		if (token == NULL)
 			break;
 		tokens[token_count++] = token;
