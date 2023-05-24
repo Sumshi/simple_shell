@@ -35,7 +35,14 @@ int main()
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
 		{	
-			exitShell();
+			int exitStatus = 0;
+
+			if (args[1] != NULL)
+			{
+				exitStatus = _atoi(args[1]);
+			}
+			exitShell(exitStatus);
+			break;
 		}
 		if (_strcmpr(args[0], "env") == 0)
 		{/*Handle env command*/

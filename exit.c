@@ -3,7 +3,7 @@
  * exitShell - exits shell
  * Return: always 0
  **/
-void exitShell(void)
+void exitShell(int exitStatus)
 {
-	exit(0);
+	exit(exitStatus);
 }
