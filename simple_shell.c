@@ -10,8 +10,9 @@ int main(void)
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
+	int run = 1;
 
-	while (1)
+	while (run)
 	{
 		if (clear_requested)
 		{
@@ -27,7 +28,8 @@ int main(void)
 		}
 		if (length == 0)
 		{
-			exit(0);
+			run = 0;
+			break;
 		}
 		if (buffer[length - 1] == '\n')
 		{/*REMOVES NEW LINE*/
