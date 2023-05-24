@@ -4,7 +4,7 @@
  * @input: input passed.
  * @args: arguments passes
  * Return: Always 0.
- **/
+ */
 void parseInput(char *input, char **args)
 {
 	int last_exit_status = 0;
@@ -14,11 +14,11 @@ void parseInput(char *input, char **args)
 	char pid[10];
 	char exit_status[10];
 
-	token = strtok(input, " \t");
+	token = _strtok(input, " ");
 	while (token != NULL)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " \t");
+		token = _strtok(NULL, " ");
 	}
 	args[i] = NULL;
 	/* Replace $?, $$ and $PATH variables */
@@ -42,7 +42,6 @@ void parseInput(char *input, char **args)
 		}
 	}
 }
-
 
 /**
  * int_to_string - converts an integer to a string

@@ -7,7 +7,6 @@ int main()
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
-	int i;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
@@ -22,9 +21,8 @@ int main()
 		length = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (length == -1)
 		{
-			/*write(STDOUT_FILENO, "\n", 2);*/
 			perror("Error from read");
-			exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
 		}
 		if (length == 0)
 		{
@@ -41,10 +39,6 @@ int main()
 		if (isComment(buffer))
 		{
 			continue;
-		}
-		for (i = 0; i < MAX_ARGS + 1; i++)
-		{
-			args[i] = NULL;
 		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
