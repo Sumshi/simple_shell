@@ -5,7 +5,7 @@
  */
 void printPrompt(void)
 {
-	if (isatty(STDIN_FILENO))/*reads from terminal*/
+	if (isatty(STDIN_FILENO) == 1)/*reads from terminal*/
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 	}
