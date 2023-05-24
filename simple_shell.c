@@ -35,7 +35,7 @@ int main()
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
 		{	
-			check_exit(args);
+			exitShell();
 		}
 		if (_strcmpr(args[0], "env") == 0)
 		{/*Handle env command*/

@@ -4,7 +4,7 @@
  * @args: argument vector
  * Return: void
  */
-void check_exit(char **args)
+/*void check_exit(char **args)
 {
 	int stats;
 
@@ -14,7 +14,7 @@ void check_exit(char **args)
 		stats = _atoi(args[1]);
 	}
 	exit(stats);
-}
+}*/
 /**
  * set_env - sets environment
  * @args: argument vector

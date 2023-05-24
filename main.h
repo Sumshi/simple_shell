@@ -33,6 +33,7 @@ char *getAliasValue(char *aliasName);
 void freeAliases();
 void handleAlias(char **args);
 /*functions*/
+void exitShell(void);
 extern char **environ;
 int clear(void);
 void printPrompt(void);
