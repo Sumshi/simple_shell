@@ -70,4 +70,7 @@ int write_integer(char **str, int num);
 /*getline*/
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
+void _memcpy(void *newptr, const void *ptr, unsigned int size);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char **_reallocdp(char **ptr, unsigned int old_size, unsigned int new_size);
 #endif
