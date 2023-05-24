@@ -64,8 +64,6 @@ void write_string(char *dest, char *src, int len);
 /*printf family functions*/
 int _snprintf(char *str, size_t size, const char *format, ...);
 int _sprintf(char *str, const char *format, ...);
-int _vsprintf(char *str, const char *fmt, va_list arg);
-int my_vsnprintf(char *buf, size_t size, const char *format, va_list arg);
 /*dynamic memoery allocations funcs*/
 void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 /* vsprintf functions*/
