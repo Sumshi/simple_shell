@@ -19,16 +19,19 @@
 #define MAX_ALIASES 100
 
 /*alias*/
-typedef struct Alias
+typedef struct AliasNode
 {
-	char *name;
-	char *value;
-} Alias;
+	char *aliasName;
+	char *aliasValue;
+	struct AliasNode *next;
+} AliasNode;
+
 void printAliases();
-void printAlias(char *name);
-void addAlias(char *name, char *value);
-void aliasCommand(char **args);
-void executeAlias(char *name);
+void addAlias(char *aliasName, char *aliasValue);
+void removeAlias(char *aliasName);
+char *getAliasValue(char *aliasName);
+void freeAliases();
+void handleAlias(char **args);
 /*functions*/
 extern char **environ;
 int clear(void);

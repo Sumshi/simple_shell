@@ -8,8 +8,7 @@ int main()
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
 	int clear_requested = 0;
-	char *cmd;
-	char *msg;
+	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
 	while (1)
 	{
@@ -79,7 +78,6 @@ int main()
 			}
 
 			free(cmd);
-
 		}
 		continue;
 	}
