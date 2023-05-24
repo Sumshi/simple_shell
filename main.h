@@ -28,6 +28,7 @@ typedef struct AliasNode
 
 extern int last_exit_status;
 /*functions*/
+int _putchar(char c);
 void exitShell(int exitStatus);
 int isComment(const char *line);
 char *handleVariables(char *input);

@@ -21,6 +21,7 @@ int executeCommand(char *cmd, char **args)
 	else if (pid < 0)
 	{
 		perror("fork");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

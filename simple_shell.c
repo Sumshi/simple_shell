@@ -26,11 +26,15 @@ int main(void)
 		}
 		if (length == 0)
 		{
-			break;/*end of file*/
+			exit(0);
 		}
 		if (buffer[length - 1] == '\n')
 		{/*REMOVES NEW LINE*/
 			buffer[length - 1] = '\0';
+		}
+		if (buffer[0] == '\033')
+		{
+			perror("./hsh: No such file or directory\n");
 		}
 		if (isComment(buffer))
 		{
