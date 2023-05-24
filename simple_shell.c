@@ -5,8 +5,9 @@
  */
 int main(void)
 {
-	char buffer[BUFFER_SIZE];
+	size_t buffer_size = 0;
 	ssize_t length;
+	char *line = NULL;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
@@ -18,7 +19,7 @@ int main(void)
 			clear_requested = 0;
 		}
 		printPrompt();
-		length = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		length = _getline(&line, &buffer_size, stdin);
 		if (length == -1)
 		{
 			perror("Error from read");
@@ -28,19 +29,19 @@ int main(void)
 		{
 			exit(0);
 		}
-		if (buffer[length - 1] == '\n')
+		if (line[length - 1] == '\n')
 		{/*REMOVES NEW LINE*/
-			buffer[length - 1] = '\0';
+			line[length - 1] = '\0';
 		}
-		if (buffer[0] == '\033')
+		if (line[0] == '\033')
 		{
 			perror("./hsh: No such file or directory\n");
 		}
-		if (isComment(buffer))
+		if (isComment(line))
 		{
 			continue;
 		}
-		parseInput(buffer, args);
+		parseInput(line, args);
 		if (_strcmpr(args[0], "exit") == 0)
 		{	
 			int exitStatus = 0;
@@ -96,5 +97,6 @@ int main(void)
 		}
 		continue;
 	}
+	free(line);
 	return (0);
 }

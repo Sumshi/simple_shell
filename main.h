@@ -69,9 +69,7 @@ void *my_realloc(void *ptr, unsigned int size, unsigned int newsize);
 char *s_itoa(int num, char *str);
 int write_integer(char **str, int num);
 /*getline*/
-ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
-void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
-void _memcpy(void *newptr, const void *ptr, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char **_reallocdp(char **ptr, unsigned int old_size, unsigned int new_size);
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 #endif
