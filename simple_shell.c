@@ -3,16 +3,14 @@
  * main - check the code
  * Return: Always 0.
  */
-int main(void)
+int main()
 {
 	char buffer[BUFFER_SIZE];
 	ssize_t length;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
-	int run = 1;
-
-	while (run)
+	while (1)
 	{
 		if (clear_requested)
 		{
@@ -28,8 +26,7 @@ int main(void)
 		}
 		if (length == 0)
 		{
-			run = 0;
-			break;
+			exit(0);
 		}
 		if (buffer[length - 1] == '\n')
 		{/*REMOVES NEW LINE*/
@@ -45,7 +42,7 @@ int main(void)
 		}
 		parseInput(buffer, args);
 		if (_strcmpr(args[0], "exit") == 0)
-		{
+		{	
 			int exitStatus = 0;
 
 			if (args[1] != NULL)
@@ -69,12 +66,18 @@ int main(void)
 		}
 		else if (_strcmpr(args[0], "setenv") == 0)
 		{/*Handle setenv command*/
-			set_env(args);
+			if (args[1] != NULL && args[2] != NULL)
+			{
+				mySetEnv(args[1], args[2]);
+			}
 			continue;
 		}
 		else if (_strcmpr(args[0], "unsetenv") == 0)
 		{/*Handle unsetenv command*/
-			unset_env(args);
+			if (args[1] != NULL)
+			{
+				myUnsetEnv(args[1]);
+			}
 			continue;
 		}
 		else if (_strcmpr(args[0], "clear") == 0)

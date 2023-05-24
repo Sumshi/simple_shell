@@ -108,6 +108,4 @@ char *mem_set(char *str, char bytes, unsigned int i);
 int freedata(main_t *data);
 void *array_build(void *a, int element, unsigned int len);
 ssize_t my_getline(main_t *data);
-
-
 #endif
