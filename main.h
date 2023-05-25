@@ -62,6 +62,7 @@ typedef struct shell_data
 
 extern int last_exit_status;
 /*functions*/
+int space_check(char *buffer);
 int _putchar(char c);
 void exitShell(int exitStatus);
 int isComment(const char *line);
