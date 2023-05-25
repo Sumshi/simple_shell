@@ -6,6 +6,11 @@
  **/
 void exitShell(int exitStatus)
 {
+	if (exitStatus < 0 || exitStatus == 1000)
+	{
+		perror("invalid exit status");
+		return;
+	}
 	exit(exitStatus);
 }
 /**
