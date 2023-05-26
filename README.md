@@ -1,6 +1,8 @@
 				SIMPLE SHELL
 The C-shell is a re-invention of the wheel. It is based on the Thompson and Bourne shells and works in an almost simmilar manner.
 
+Its usage is simmillar to the normal terminal and works, although not effectively for now but in a more simmilar way.
+
 
 			Usage:
  1. fork the Repo.
