@@ -1,5 +1,5 @@
 				SIMPLE SHELL
-The C-shell is a re-invention of the wheel Thompson and Bourne shells and works almost simillarly to this shells.
+The C-shell is a re-invention of the wheel. It is based on the Thompson and Bourne shells and works almost simillarly to this shells.
 
 
 			Usage:
