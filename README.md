@@ -3,6 +3,9 @@ The C-shell is a re-invention of the wheel. It is based on the Thompson and Bour
 
 Its usage is simmillar to the normal terminal and works, although not effectively for now but in a more simmilar way.
 
+This project is based on C language and mostly covers what we have learned so far concering the C langage.
+
+It is an extensive topic and mostly resonates around coding with a singke and simple structure.
 
 			Usage:
  1. fork the Repo.
