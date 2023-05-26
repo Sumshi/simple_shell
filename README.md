@@ -8,7 +8,8 @@ The C-shell is a re-invention of the wheel Thompson and Bourne shells and works 
  3. Enjoy C-shell.
 
 This code is under building. some features may be missing. 
-The general built-in-functions of the shell may be present but the edge cases are missing currently
+The general built-in-functions are present. 
+currently working o edge cases 
 
 
 		THIS WAS DONE AS THE FINAL PROJECT FOR THE FIRST SPRINT IN ALX SOFTWARE ENGINEERING PROGRAM
