@@ -1,52 +1,32 @@
 #include "main.h"
-
-
-int execute(char **args, char **front)
+/**
+ * executeCommand - executes a command
+ * @cmd: command to execute
+ * @args: arguments passed
+ * Return: Always 0.
+ */
+int executeCommand(char *cmd, char **args)
 {
-	pid_t child_pid;
-	int status, flag = 0, ret = 0;
-	char *command = args[0];
+	int last_exit_status = 0;
+	pid_t pid;
+	int status;
 
-	if (command[0] != '/' && command[0] != '.')
+	pid = fork();
+	if (pid == 0)
 	{
-		flag = 1;
-		command = get_location(command);
+		execve(cmd, args, NULL);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
-
-	if (!command || (access(command, F_OK) == -1))
+	else if (pid < 0)
 	{
-		if (errno == EACCES)
-			ret = (print_error(args, 126));
-		else
-			ret = (print_error(args, 127));
+		perror("fork");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			if (flag)
-				free(command);
-			perror("Error child:");
-			return (1);
-		}
-		if (child_pid == 0)
-		{
-			execve(command, args, environ);
-			if (errno == EACCES)
-				ret = (print_error(args, 126));
-			free_env();
-			free_args(args, front);
-			free_alias_list(aliases);
-			_exit(ret);
-		}
-		else
-		{
-			wait(&status);
-			ret = WEXITSTATUS(status);
-		}
+		waitpid(pid, &status, 0);
+		last_exit_status = WEXITSTATUS(status);
 	}
-	if (flag)
-		free(command);
-	return (ret);
+	return (last_exit_status);
 }

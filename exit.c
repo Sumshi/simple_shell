@@ -4,37 +4,9 @@
  * @exitStatus: value
  * Return: always 0
  **/
-int exitShell(char **args, char **var)
+void exitShell(int exitStatus)
 {
-	int i, len_int = 10;
-	unsigned int n = 0, max = 1 << (sizeof(int) * 8 - 1);
-
-	if (args[0])
-	{
-		if (args[0][0] == '+')
-		{
-			i = 1;
-			len_int++;
-		}
-		for (; args[0][i]; i++)
-		{
-			if (i <= len_int && args[0][i] >= '0' && args[0][i] <= '9')
-				n = (n * 10) + (args[0][i] - '0');
-			else
-				return (print_error(--args, 2));
-		}
-	}
-	else
-	{
-		return (-3);
-	}
-	if (n > max - 1)
-		return (print_error(--args, 2));
-	args -= 1;
-	free_args(args, var);
-	free_env();
-	free_alias_list(aliases);
-	exit(n);
+	exit(exitStatus);
 }
 /**
  * isComment - checks for comments
