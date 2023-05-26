@@ -14,33 +14,39 @@ void ctrl_c(__attribute__((unused)) int x)
 /**
  * print_error - print specific errors to standard output.
  * @program_name: argv[0] of main.
- * @input: command that produces the error.
+ *
  * @error_num: error number - identifies the error type.
  */
-void print_error(char *program_name, char *input, int error_num)
+int print_error(char **program_name, int error_num)
 {
-	char *str;
+	char *error;
 
-	if (error_num == 127) /* command not found */
+	switch (error_num)
 	{
-		write(STDOUT_FILENO, program_name, _strlen(program_name));
-		write(STDOUT_FILENO, ": 1: ", 5);
-		write(STDOUT_FILENO, input, _strlen(input));
-		write(STDOUT_FILENO, ": not found\n", 12);
+		case -1:
+			error = error_env(program_name);
+			break;
+		case 1:
+			error = error_1(program_name);
+			break;
+		case 2:
+			if (*(program_name[0]) == 'e')
+				error = error_2_exit(++program_name);
+			else if (program_name[0][0] == ';' || program_name[0][0] == '&' || program_name[0][0] == '|')
+				error = error_2_syntax(program_name);
+			else
+				error = error_2_cd(program_name);
+			break;
+		case 126:
+			error = error_126(program_name);
+			break;
+		case 127:
+			error = error_127(program_name);
+			break;
 	}
-	if (error_num == 2) /* syntax error*/
-	{
-		str = "sh: 1: Syntax error: \"";
-		write(STDOUT_FILENO, str, _strlen(str));
-		write(STDOUT_FILENO, ";", 1);
-		str = "\" unexpected\n";
-		write(STDOUT_FILENO, str, _strlen(str));
-	}
-	if (error_num == 3) /* malloc can't allocate memory */
-	{
-		write(STDOUT_FILENO, program_name, _strlen(program_name));
-		write(STDOUT_FILENO, ": 1: ", 5);
-		str = "internal error allocating memory\n";
-		write(STDOUT_FILENO, str, _strlen(str));
-	}
+	write(STDERR_FILENO, error, _strlen(error));
+
+	if (error)
+		free(error);
+	return (error_num);
 }

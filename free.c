@@ -40,3 +40,46 @@ void *array_build(void *a, int element, unsigned int len)
 	}
 	return (a);
 }
+
+void free_env(void)
+{
+	int index;
+
+	for (index = 0; environ[index]; index++)
+		free(environ[index]);
+	free(environ);
+}
+void free_list(list_t *head)
+{
+	list_t *next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head->dir);
+		free(head);
+		head = next;
+	}
+}
+void free_args(char **args, char **front)
+{
+	size_t i;
+
+	for (i = 0; args[i] || args[i + 1]; i++)
+		free(args[i]);
+
+	free(front);
+}
+void free_alias_list(alias_t *head)
+{
+	alias_t *next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head->name);
+		free(head->value);
+		free(head);
+		head = next;
+	}
+}

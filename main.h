@@ -14,6 +14,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <errno.h>
 #define BUFFER_SIZE 1024
 #define MAX_ARGS 100
 #define MAX_ALIASES 100
@@ -22,6 +23,9 @@
 #define SUCCESS (1)
 #define PRINT(c) (write(STDOUT_FILENO, c, _strlen(c)))
 #define PROMPT "$ "
+
+char *name;
+int hist;
 /*alias*/
 /**
  * struct AliasNode - Alias node
@@ -31,11 +35,16 @@
  */
 typedef struct AliasNode
 {
-	char *aliasName;
-	char *aliasValue;
+	char *name;
+	char *value;
 	struct AliasNode *next;
-} AliasNode;
-
+} alias_t;
+typedef struct list_s
+{
+	char *dir;
+	struct list_s *next;
+} list_t;
+alias_t *aliases;
 
 /**
  * struct shell_data - Global data structure
@@ -64,7 +73,7 @@ extern int last_exit_status;
 /*functions*/
 int space_check(char *buffer);
 int _putchar(char c);
-void exitShell(int exitStatus);
+int exitShell(char **agrs, char **var);
 int isComment(const char *line);
 char *handleVariables(char *input);
 extern char **environ;
@@ -109,4 +118,20 @@ char *mem_set(char *str, char bytes, unsigned int i);
 int freedata(main_t *data);
 void *array_build(void *a, int element, unsigned int len);
 ssize_t my_getline(main_t *data);
+char *_itoa(int num);
+
+char *error_env(char **args);
+char *error_1(char **args);
+char *error_2_exit(char **args);
+char *error_2_cd(char **args);
+char *error_126(char **args);
+char *error_127(char **args);
+char *error_2_syntax(char **args);
+list_t *get_path_dir(char *path);
+char *get_location(char *command);
+char *fill_path_dir(char *path);
+int print_error(char **program_name, int error_num);
+void free_env(void);
+void free_args(char **args, char **front);
+void free_alias_list(alias_t *head);
 #endif
