@@ -29,6 +29,10 @@ int main(void)
 		{
 			exit(0);
 		}
+		if (length == 1)
+		{
+			continue;
+		}
 		if (buffer[length - 1] == '\n')
 		{/*REMOVES NEW LINE*/
 			buffer[length - 1] = '\0';
