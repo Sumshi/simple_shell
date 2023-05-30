@@ -1,29 +1,15 @@
 #include "main.h"
-void int_handler(int sig_n);
-/**
-* int_handler - a fuction that invoked for a signal
-* function and show the prompt
-* @sig_n: number of the signal
-*/
-void int_handler(int sig_n)
-{
-	(void) sig_n;
-	write(STDOUT_FILENO, "$ ", 2);
-}
 /**
  * main - check the code
  * Return: Always 0.
  */
 int main(void)
 {
-	/*char buffer[BUFFER_SIZE];*/
-	char *buffer = NULL;
-	size_t len = 0;
+	char buffer[BUFFER_SIZE];
 	ssize_t length;
 	int clear_requested = 0;
 	char *cmd, *msg;
 	char *args[MAX_ARGS + 1]; /* 1 for null terminator */
-	int is_interactive = isatty(STDIN_FILENO);
 
 	while (1)
 	{
@@ -32,21 +18,11 @@ int main(void)
 			clear();
 			clear_requested = 0;
 		}
-		if (is_interactive)
+		printPrompt();
+		length = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (length == -1)
 		{
-		write(STDOUT_FILENO, "$ ", 2);
-		}
-		signal(SIGINT, int_handler);
-		length = getline(&buffer, &len, stdin);
-		if (length == -1 && is_interactive)
-		{
-			write(1, "\n", 1);
-			free(buffer);
-			exit(EXIT_FAILURE);
-		}
-		if (length == -1 && !is_interactive)
-		{
-			free(buffer);
+			perror("Error from read");
 			exit(EXIT_FAILURE);
 		}
 		if (length == 0)
@@ -58,14 +34,9 @@ int main(void)
 			continue;
 		}
 		if (buffer[length - 1] == '\n')
-		{
+		{/*REMOVES NEW LINE*/
 			buffer[length - 1] = '\0';
 		}
-		if (strcmp(buffer, "\n") == 0 && is_interactive)
-		{
-			continue;
-		}
-
 		if (buffer[0] == '\033')
 		{
 			perror("./hsh: No such file or directory\n");
