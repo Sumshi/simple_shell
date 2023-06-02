@@ -2,7 +2,7 @@
 
 /**
  * sig_handler - Prints a new prompt upon a signal.
- * @sig: The signal.
+ * @sig: The signal ed ctrl + c
  */
 void sig_handler(int sig)
 {
